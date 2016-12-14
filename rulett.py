@@ -6,11 +6,9 @@ from random import randint
 import tkinter as tk
 from tkinter import ttk
 from tkinter.font import Font
-##
-####ruletinupu_font =  tk.font(family='Helvetica', size=12, weight='bold')
-##
-##myFont = Font(family="Times New Roman", size=12)
 
+
+# tkinter on üks õudne loom, 
 def arvuta_panused():
 
     panusestring = ""
@@ -21,13 +19,13 @@ def arvuta_panused():
 
     
 def vasak_hiireklahv(nupp, nupu_kirje):
-    current_balance -= bet
+    balanss.set(balanss.get() - bet)
     panuste_sonastik[nupp] = panuste_sonastik.get(nupp, 0) + bet
     panused.set(arvuta_panused())
     print(panuste_sonastik.get(nupp, "Tühi"))
     
 def parem_hiireklahv(nupp, nupu_kirje):
-    current_balance += bet
+    balanss.set(balanss.get() + bet)
     panuste_sonastik[nupp] = panuste_sonastik.get(nupp, 0) - bet
     if panuste_sonastik.get(nupp, 0)  <= 0:
         panuste_sonastik.pop(nupp, None)
@@ -61,16 +59,23 @@ def gameround():
 
 
 def create_window():
+    """ Mänjuhend abi uues aknas"""
     abiinfo = tk.Toplevel(root)
     abiinfo.title("Mängujuhend")
     txt = tk.Text(abiinfo)
     txt.grid(column=0, row=0)
-    txt.insert(insert, abitekst)
+    txt.insert("insert", abitekst)
 
 abitekst = """•Panuse tegemiseks klõpsake ruletilaua panustamisalale. \n
             •Mängimiseks klõpsake nupule "Mängi"."""
 
 
+
+start_balance = 1000
+balanss = start_balance
+bet = 1
+panuste_sonastik = dict()
+lauanupud = dict()
 
 root = tk.Tk()
 
@@ -90,7 +95,7 @@ ruletilaud.grid(column=1, row=2)
 panuseinfo.grid(column=2, row=1, rowspan=5)
 
 
-balanss = tk.StringVar()
+balanss = tk.IntVar()
 balanss.set(1000)
 txt_saldo = tk.Label(saldoframe, text="Saldo", font=("Times New Roman", 14, "bold"))
 txt_saldo.grid(column=0, row=0, sticky="s")
@@ -104,6 +109,8 @@ panused = tk.StringVar()
 show_bets = tk.Label(louend, textvariable=panused)
 show_bets.grid(column=0, row=0, padx=20)
 show_bets.config(height=20)
+
+#Scrollbar ei tööta!!!
 ##scrollb = tk.Scrollbar(show_bets, orient='vertical', command=show_bets.yview)
 ##scrollb.grid(row=0, column=2, sticky='e', padx=20)
 
@@ -128,11 +135,7 @@ animatsioon = ttk.Label(animatsioon, text='Kujuteldav\nanimatsioon')
 animatsioon.grid(column=0, row=0, rowspan=10)
 animatsioon.config(width=20)
 
-start_balance = 1000
-current_balance = start_balance
-bet = 1
-panuste_sonastik = dict()
-lauanupud = dict()
+
 
 
 # Ruletilaua nupud
@@ -142,6 +145,7 @@ lauanupud_frame.grid(column=1, row=0)
 nupp_0 = lauanupp(lauanupud_frame, text="0", col=0, row=0, rowspan=3)
 nupp_0.config(height=16, width=5)
 
+# Tegelikult poleks neid muutujaid üldse vaja, kui aega le jääb võiks tsükliga kokku lükata
 nupp_1 = lauanupp(lauanupud_frame, text="1", col=1, row=0)
 nupp_2 = lauanupp(lauanupud_frame, text="2", col=1, row=1)
 nupp_3 = lauanupp(lauanupud_frame, text="3", col=1, row=2)

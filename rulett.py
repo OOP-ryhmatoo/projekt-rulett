@@ -2,19 +2,27 @@
 Projekt rulett
 tkinteri abil lihtsustatud ruleti simulatsioon
 """
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
 from random import randint
 import tkinter as tk
 from tkinter import ttk
 from tkinter.font import Font
+<<<<<<< HEAD
 from tkinter import scrolledtext
+=======
+>>>>>>> origin/master
 
 
+# tkinter on üks õudne loom, 
 def arvuta_panused():
 
     panusestring = ""
 
     for p in panuste_sonastik:
+<<<<<<< HEAD
         panuseala = lauanupud[p][0].replace("\n", " ")
         panusestring += "Väli: " + panuseala + ", Panus: " + str(panuste_sonastik[p])  + "€\n"
     return panusestring
@@ -30,17 +38,36 @@ def vasak_hiireklahv(nupp):
     
 def parem_hiireklahv(nupp):
     
+=======
+        panusestring += str(lauanupud[p]) + " Panus:" + str(panuste_sonastik[p]) + "\n"
+    return panusestring
+
+    
+def vasak_hiireklahv(nupp, nupu_kirje):
+    balanss.set(balanss.get() - bet)
+    panuste_sonastik[nupp] = panuste_sonastik.get(nupp, 0) + bet
+    panused.set(arvuta_panused())
+    print(panuste_sonastik.get(nupp, "Tühi"))
+    
+def parem_hiireklahv(nupp, nupu_kirje):
+>>>>>>> origin/master
     balanss.set(balanss.get() + bet)
     panuste_sonastik[nupp] = panuste_sonastik.get(nupp, 0) - bet
     if panuste_sonastik.get(nupp, 0)  <= 0:
         panuste_sonastik.pop(nupp, None)
+<<<<<<< HEAD
     show_bets.delete(1.0, "end")
     show_bets.insert("end", arvuta_panused())
+=======
+    panused.set(arvuta_panused())
+    print(panuste_sonastik.get(nupp, "Tühi"))
+>>>>>>> origin/master
 
 
 def lauanupp(frame, text, col=0, row=0, rowspan=1, colspan=1):
 
     nupp = tk.Button(frame, text=text)
+<<<<<<< HEAD
     nupp.bind('<Button-1>', lambda event, obj=nupp: vasak_hiireklahv(nupp))
     nupp.bind('<Button-3>', lambda event, obj=nupp: parem_hiireklahv(nupp))
     nupp.bind("<Enter>", lambda event, obj=nupp: event.widget.config(fg="yellow"))
@@ -64,10 +91,24 @@ def lauanupp(frame, text, col=0, row=0, rowspan=1, colspan=1):
         payout = 35
         
     lauanupud[nupp] = (text, payout)
+=======
+    lauanupud[nupp] = "Nupp" + text
+    nupp.bind('<Button-1>', lambda event, obj=nupp: vasak_hiireklahv(nupp, lauanupud[nupp]))
+    nupp.bind('<Button-3>', lambda event, obj=nupp: parem_hiireklahv(nupp, lauanupud[nupp]))    
+    nupp.grid(column=col, row=row, rowspan=rowspan, columnspan=colspan)
+    if text in ("1","3","5","7","9","12","14","16","18","19","21","23","25","27","30","32","34","36", "Punane"):
+        bg = "red"
+    elif text in ("2","4","6","8","10","11","13","15","17","20","22","24","26","28","29","31","33","35", "Must"):
+        bg = "black"
+    else:
+        bg = "green"
+    nupp.config(width=4, height=5, font=("Times New Roman", 13, "bold"), fg="white", bg=bg)
+>>>>>>> origin/master
 
     return nupp
 
 
+<<<<<<< HEAD
 
 def gameround():
     """  """
@@ -168,6 +209,35 @@ Pool lauda 	    Numbrid 1-18 või 19-36        €1 : €1
     txt.insert("insert", abitekst)
     sulgemisnupp = tk.Button(abiinfo, text="Sulge", font=("Times New Roman", 13, "bold"), command=abiinfo.destroy)
     sulgemisnupp.grid(column=0, row=1)
+=======
+def gameround():
+    """ Vaata panused üle, arvuta"""
+    print("Mängu alga", panuste_sonastik)
+    result = randint(0, 36)
+    print("Tulemus", result)
+
+
+def create_window():
+    """ Mänjuhend abi uues aknas"""
+    abiinfo = tk.Toplevel(root)
+    abiinfo.title("Mängujuhend")
+    txt = tk.Text(abiinfo)
+    txt.grid(column=0, row=0)
+    txt.insert("insert", abitekst)
+
+abitekst = """•Panuse tegemiseks klõpsake ruletilaua panustamisalale. \n
+            •Mängimiseks klõpsake nupule "Mängi"."""
+
+
+
+start_balance = 1000
+balanss = start_balance
+bet = 1
+panuste_sonastik = dict()
+lauanupud = dict()
+
+root = tk.Tk()
+>>>>>>> origin/master
 
 
 
@@ -192,15 +262,20 @@ lauanupud = dict()
 root = tk.Tk()
 root.resizable(0,0)
 root.title("Rulett")
+<<<<<<< HEAD
 root.geometry('1110x500')
 # Kõik need freimid
 abinupp = ttk.Frame(root)
+=======
+root.geometry('1000x600')
+>>>>>>> origin/master
 tabloo = ttk.Frame(root)
 ruletilaud = ttk.Frame(root)
 panuseinfo = ttk.Frame(root)
 panusenupud = ttk.Frame(root)
 animatsioon = ttk.Frame(root)
 saldoframe = ttk.Frame(root)
+<<<<<<< HEAD
 
 #Help nupp
 abinupp.grid(column=0, row=0)
@@ -240,6 +315,56 @@ win_msg = tk.StringVar()
 win_msg.set("Tee oma panused")
 tablooinfo = tk.Label(tabloo, textvariable=win_msg, font=("Times New Roman", 13, "bold"), relief="sunken", width=20, height=2)
 tablooinfo.grid(column=0, row=0)
+=======
+
+tabloo.grid(column=1, row=0, sticky="new")
+animatsioon.grid(column=0, row=1)
+saldoframe.grid(column=0, row=2, sticky="s")
+ruletilaud.grid(column=1, row=2)
+panuseinfo.grid(column=2, row=1, rowspan=5)
+
+
+balanss = tk.IntVar()
+balanss.set(1000)
+txt_saldo = tk.Label(saldoframe, text="Saldo", font=("Times New Roman", 14, "bold"))
+txt_saldo.grid(column=0, row=0, sticky="s")
+saldo = tk.Label(saldoframe, textvariable=balanss, font=("Times New Roman", 13, "bold"))
+saldo.grid(column=0, row=1)
+
+louend = tk.Canvas(panuseinfo)
+louend.grid(row=0, column=0, sticky="nesw")
+
+panused = tk.StringVar()
+show_bets = tk.Label(louend, textvariable=panused)
+show_bets.grid(column=0, row=0, padx=20)
+show_bets.config(height=20)
+
+#Scrollbar ei tööta!!!
+##scrollb = tk.Scrollbar(show_bets, orient='vertical', command=show_bets.yview)
+##scrollb.grid(row=0, column=2, sticky='e', padx=20)
+
+
+
+panusenupud.grid(column=1, row=3)
+panusenupp = tk.Button(panusenupud, text="Mängi")  
+panusenupp.grid(column=0, row=0, rowspan=1, pady=20)
+panusenupp.config(width=10, height=2)
+panusenupp.bind('<Button-1>', lambda event, obj=panusenupp: gameround())
+
+
+
+tablooinfo = ttk.Label(tabloo, text='Tablooinfo')
+tablooinfo.grid(column=1, row=0, columnspan=10)
+
+abinupp = tk.Button(tabloo, text="Mängujuhend")  
+abinupp.grid(column=0, row=0)
+abinupp.bind('<Button-1>', lambda event, obj=abinupp: create_window())
+
+animatsioon = ttk.Label(animatsioon, text='Kujuteldav\nanimatsioon')
+animatsioon.grid(column=0, row=0, rowspan=10)
+animatsioon.config(width=20)
+
+>>>>>>> origin/master
 
 abinupp = tk.Button(abinupp, text="Mängujuhend", font=("Times New Roman", 13, "bold"), relief="ridge", anchor="w")  
 abinupp.grid(column=0, row=0)
@@ -257,9 +382,15 @@ lauanupud_frame = ttk.Frame(ruletilaud)
 lauanupud_frame.grid(column=1, row=0)
 
 nupp_0 = lauanupp(lauanupud_frame, text="0", col=0, row=0, rowspan=3)
+<<<<<<< HEAD
 nupp_0.config(height=10, width=5)
 
 # Tegelikult poleks neid muutujaid üldse vaja, kui aega üle jääb(ha-ha), siis võiks tsükliga kokku lükata
+=======
+nupp_0.config(height=16, width=5)
+
+# Tegelikult poleks neid muutujaid üldse vaja, kui aega le jääb võiks tsükliga kokku lükata
+>>>>>>> origin/master
 nupp_1 = lauanupp(lauanupud_frame, text="1", col=1, row=0)
 nupp_2 = lauanupp(lauanupud_frame, text="2", col=1, row=1)
 nupp_3 = lauanupp(lauanupud_frame, text="3", col=1, row=2)
@@ -296,9 +427,15 @@ nupp_33 = lauanupp(lauanupud_frame, text="33", col=11, row=2)
 nupp_34 = lauanupp(lauanupud_frame, text="34", col=12, row=0)
 nupp_35 = lauanupp(lauanupud_frame, text="35", col=12, row=1)
 nupp_36 = lauanupp(lauanupud_frame, text="36", col=12, row=2)
+<<<<<<< HEAD
 nupp_2to1_1 = lauanupp(lauanupud_frame, text="1.\nveerg", col=13, row=0)
 nupp_2to1_2 = lauanupp(lauanupud_frame, text="2.\nveerg", col=13, row=1)
 nupp_2to1_3 = lauanupp(lauanupud_frame, text="3.\nveerg", col=13, row=2)
+=======
+nupp_2to1_1 = lauanupp(lauanupud_frame, text="2:1", col=13, row=0)
+nupp_2to1_2 = lauanupp(lauanupud_frame, text="2:1", col=13, row=1)
+nupp_2to1_3 = lauanupp(lauanupud_frame, text="2:1", col=13, row=2)
+>>>>>>> origin/master
 
 nupp_1_12 = lauanupp(lauanupud_frame, text="1. 12", col=1, row=3, colspan=4)
 nupp_2_12 = lauanupp(lauanupud_frame, text="2. 12", col=5, row=3, colspan=4)
